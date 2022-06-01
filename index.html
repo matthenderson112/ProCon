@@ -1,10 +1,202 @@
 <html>
 <head>
+  <script>
+    $(document).ready(function(){
+  $('input').first().focus()  ;
+});
+
+
+$('input').focus(function() {
+      $(this).addClass("filled");
+      $(".active").removeClass(); 
+      $(this).siblings().first().addClass("active"); 
+    }).blur(function(){
+      if( !$(this).val() ) { 
+        $(this).removeClass("filled");
+      } 
+        $(".active").removeClass(); 
+    });
+
+$("input").keydown(function (e) {
+   if (e.which == 13 ){
+    var empties = 0;
+    if( $(this).next().length != 0) {
+      $(this).next().focus();
+      return;
+    }
+     $(this).clone(true).val("").removeClass().appendTo($(this).parent()).focus();
+    }
+});
+  </script>
+  <style>
+    @import url(https://fonts.googleapis.com/css?family=Roboto:100,300);
+
+@import url(https://fonts.googleapis.com/css?family=Special+Elite);
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background: rgb(30,33,38);
+  // background: rgb(236, 0, 140);
+  font-family: Roboto;
+  font-weight: 300;
+}
+
+.main {
+  text-align: center;
+}
+
+@mixin title() {
+  width: 100%;
+  font-family: "Roboto";
+  letter-spacing: .1rem;
+  padding: 3rem 0 2rem 0;
+  font-size: 3rem;
+  color: rgba(255,255,255,.35);
+  font-weight: bold;
+  background-color: inherit;
+  transition: all 300ms ease-in-out;
+}
+
+@mixin green-gradient() {
+   background: -webkit-linear-gradient(0deg, #B5AC49 10%, #3CA55C 90%); /* Chrome 10+, Saf5.1+ */
+  background:    -moz-linear-gradient(0deg, #B5AC49 10%, #3CA55C 90%); /* FF3.6+ */
+  background:     -ms-linear-gradient(0deg, #B5AC49 10%, #3CA55C 90%); /* IE10 */
+  background:      -o-linear-gradient(0deg, #B5AC49 10%, #3CA55C 90%); /* Opera 11.10+ */
+  background:         linear-gradient(0deg, #B5AC49 10%, #3CA55C 90%); /* W3C */
+}
+
+.list {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  width: 100%;
+  transition: all 300ms ease-in-out;
+  min-height: 450px;
+  &__pros {
+    width: 80%;
+    // @include green-gradient;
+    padding: 0 1.5rem;
+    h1 {
+      @include title;
+      span {
+        color: green;
+        font-weight: normal;
+      }
+      &.active {
+        color: white;
+        transition: all 300ms ease-in-out;
+      }
+    }
+  }
+  &__line {
+    width: 0%;
+    border-right: 1px solid rgba(255,255,255,.5);
+  }
+  &__cons {
+    width: 80%;
+    padding: 0 1.5rem;
+    h1 {
+      @include title;
+      span {
+        color: red;
+        font-weight: bold;
+      }
+      &.active {
+        color: white;
+        transition: all 300ms ease-in-out;
+      }
+    }
+  }
+}
+
+.footer {
+  padding: 3rem 0;
+  color: rgba(255,255,255,.3);
+  p code {
+    font-family: monospace;
+    background: rgba(255,255,255,.05);
+    padding: 0 .25rem;
+    border-radius: .25rem;
+    color: rgba(255,255,255,.5);
+  }
+}
+
+input[type="text"] {
+  width: 100%;
+  height: 2rem;
+  background: none;
+  padding: 1.75rem;
+  margin: 0;
+  border: none;
+  font-weight: 300;
+  transition: all 0.3s ease-in;
+  border-bottom: 1px solid rgba(255,255,255,.3);
+  font-size: 1.5rem;
+  font-weight: 100;
+  color: rgba(255,255,255,.8);
+  &:focus {
+    outline: none;
+  }
+  &:last-of-type {
+    margin-bottom: 1rem;  
+  }
+  &.filled {
+    border-color: rgba(255,255,255,.1);
+  }
+}
+
+.fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  .pros {
+    width: 50%;
+    height: .5rem;
+    background-color: green;
+  }
+  .cons {
+    width: 50%;
+    height: .5rem;
+    background-color: red;
+  }
+}
+  </style>
 </head>
 
 <body>
-<div>
-<p>Hello World</p>
+<div class="fixed">
+  <div class="pros"></div>
+  <div class="cons"></div>
+</div>
+
+<div class="main">
+  <div class="list">
+    <div class="list__pros">
+      <h1>
+        <span>+</span> PROS
+      </h1>
+      <input type="text" spellcheck="false" />
+      <input type="text" spellcheck="false" />
+      <input type="text" spellcheck="false" />
+    </div>
+    <div class="list__line">
+    </div>
+    <div class="list__cons">
+      <h1>
+        <span>-</span> CONS
+      </h1>
+      <input type="text" spellcheck="false" />
+      <input type="text" spellcheck="false" />
+      <input type="text" spellcheck="false" />
+    </div>
+  </div>
+  <div class="footer">
+    <p><code>tab</code> & <code>tab + shift</code> to navigate. <code>Enter</code> for new lines.</p>
+  </div>
 </div>
 <body>
 </html>
